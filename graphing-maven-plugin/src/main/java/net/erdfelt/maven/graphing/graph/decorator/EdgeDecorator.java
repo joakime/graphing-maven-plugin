@@ -54,7 +54,7 @@ public class EdgeDecorator
 
     private String lineLabel;
 
-    private LineStyle style;
+    private LineStyle style = LineStyle.NORMAL;
 
     private int fontSize = 8;
 
@@ -105,6 +105,12 @@ public class EdgeDecorator
 
     public void setStyle(LineStyle style)
     {
+        if (style == null)
+        {
+            this.style = LineStyle.NORMAL;
+            return;
+        }
+
         this.style = style;
     }
 

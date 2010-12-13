@@ -35,6 +35,7 @@ import net.erdfelt.maven.graphing.graph.model.Graph;
 import net.erdfelt.maven.graphing.graph.model.Node;
 import net.erdfelt.maven.graphing.graph.util.ColorUtil;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
@@ -47,9 +48,8 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
  * GraphvizRenderer
  * 
  * @since 1.0
- * 
- * @plexus.component role="org.codehaus.plexus.graphing.GraphRenderer" role-hint="graphviz"
  */
+@Component(role = GraphRenderer.class, hint = "graphviz")
 public class GraphvizRenderer extends AbstractLogEnabled implements GraphRenderer
 {
     private static List<String> outputFormats;
@@ -90,11 +90,23 @@ public class GraphvizRenderer extends AbstractLogEnabled implements GraphRendere
     public void render(Graph graphModel, File outputFile) throws IOException, GraphingException
     {
         File dotFile = prepareDot(graphModel,outputFile);
-
+        
         String workdir = outputFile.getParent();
         if (StringUtils.isEmpty(workdir))
         {
             workdir = ".";
+        }
+        else
+        {
+            File dir = outputFile.getCanonicalFile().getParentFile();
+            workdir = dir.getAbsolutePath();
+            if (!dir.exists())
+            {
+                if (!dir.mkdirs())
+                {
+                    throw new IOException("Unable to make directories: " + dir.getAbsolutePath());
+                }
+            }
         }
         String extension = FileUtils.extension(outputFile.getName());
 
@@ -162,7 +174,7 @@ public class GraphvizRenderer extends AbstractLogEnabled implements GraphRendere
             graphId = toVizId(graphId);
         }
 
-        dot.println("// Auto generated dot file from plexus-graphing-graphviz.");
+        dot.println("// Auto generated dot file from graphing-maven-plugin.");
 
         dot.println("digraph " + graphId + " {");
 

@@ -28,8 +28,6 @@ import net.erdfelt.maven.graphing.graph.model.Graph;
  */
 public interface GraphRenderer
 {
-    public static final String ROLE = GraphRenderer.class.getName();
-
     /**
      * <p>
      * Return the list of output formats that this renderer supports.

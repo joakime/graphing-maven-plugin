@@ -14,6 +14,20 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>Project Graphing Maven Plugin</name>
+  
+  <scm>
+    <connection>scm:git:git@github.com:joakime/graphing-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:joakime/graphing-maven-plugin.git</developerConnection>
+    <url>https://github.com/joakime/graphing-maven-plugin</url>
+  </scm>
+  
+  <licenses>
+    <license>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <name>Apache 2.0</name>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <inceptionYear>2010</inceptionYear>
 
@@ -21,7 +35,7 @@
     <developer>
       <id>joakime</id>
       <name>Joakim Erdfelt</name>
-      <email>joakim@erdfelt.org</email>
+      <email>joakim@erdfelt.net</email>
       <roles>
         <role>Java Developer</role>
       </roles>
@@ -30,7 +44,7 @@
   </developers>
 
   <properties>
-    <maven.version>3.0</maven.version>
+    <mavenVersion>3.0</mavenVersion>
   </properties>
   
   <build>
@@ -38,11 +52,32 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
         </configuration>
       </plugin>
+      
+      <plugin> 
+        <groupId>org.codehaus.plexus</groupId> 
+        <artifactId>plexus-component-metadata</artifactId> 
+        <version>1.5.5</version> 
+        <executions> 
+          <execution> 
+            <id>process-classes</id> 
+            <goals> 
+              <goal>generate-metadata</goal> 
+            </goals> 
+          </execution> 
+          <execution> 
+            <id>process-test-classes</id> 
+            <goals> 
+              <goal>generate-test-metadata</goal> 
+            </goals> 
+          </execution> 
+        </executions> 
+      </plugin> 
     </plugins>
   </build>
 
@@ -50,23 +85,13 @@
     <!-- maven plugin deps -->
     <dependency>
       <groupId>org.apache.maven</groupId>
-      <artifactId>maven-artifact</artifactId>
-      <version>${maven.version}</version>
+      <artifactId>maven-compat</artifactId>
+      <version>${mavenVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>${maven.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.reporting</groupId>
-      <artifactId>maven-reporting-api</artifactId>
-      <version>${maven.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-model</artifactId>
-      <version>${maven.version}</version>
+      <version>${mavenVersion}</version>
     </dependency>
     <!-- testing deps -->
     <dependency>
@@ -84,7 +109,7 @@
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.2</version>
+      <version>2.0-alpha-1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
