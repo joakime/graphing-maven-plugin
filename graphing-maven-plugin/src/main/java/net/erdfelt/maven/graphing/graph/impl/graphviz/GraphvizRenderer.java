@@ -139,6 +139,10 @@ public class GraphvizRenderer extends AbstractLogEnabled implements GraphRendere
 
             if (result != 0)
             {
+            	if(result == 127)
+            	{
+            		throw new GraphvizNotFoundException("Graphviz dot command not found on system path (exit code 127)");
+            	}
                 throw new GraphingException("Graphviz execution failed, exit code: \'" + result + "\'");
             }
         }

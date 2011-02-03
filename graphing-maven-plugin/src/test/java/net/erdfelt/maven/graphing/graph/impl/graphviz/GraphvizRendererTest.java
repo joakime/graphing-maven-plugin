@@ -15,101 +15,111 @@ import org.codehaus.plexus.PlexusTestCase;
 import org.junit.Assert;
 
 /**
- * GraphvizRendererTest 
- *
+ * GraphvizRendererTest
+ * 
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
  * @version $Id$
  */
-public class GraphvizRendererTest
-    extends PlexusTestCase
-{
-    private GraphRenderer getRenderer()
-        throws Exception
-    {
-        GraphRenderer renderer = (GraphRenderer)lookup( GraphRenderer.class.getName(), "graphviz" );
-        Assert.assertNotNull("GraphRenderer lookup should not be null", renderer);
-        return renderer;
-    }
+public class GraphvizRendererTest extends PlexusTestCase {
+	private GraphRenderer getRenderer() throws Exception {
+		GraphRenderer renderer = (GraphRenderer) lookup(
+				GraphRenderer.class.getName(), "graphviz");
+		Assert.assertNotNull("GraphRenderer lookup should not be null",
+				renderer);
+		return renderer;
+	}
 
-    public void testSimple()
-        throws Exception
-    {
-        GraphRenderer renderer = getRenderer();
+	public void testSimple() throws Exception {
+		GraphRenderer renderer = getRenderer();
 
-        Graph model = new Graph();
-        GraphDecorator decorator = new GraphDecorator();
-        model.setDecorator( decorator );
+		Graph model = new Graph();
+		GraphDecorator decorator = new GraphDecorator();
+		model.setDecorator(decorator);
 
-        decorator.setTitle( "symple" );
+		decorator.setTitle("symple");
 
-        model.addEdge( "main", "parse" );
-        model.addEdge( "parse", "execute" );
-        model.addEdge( "main", "init" );
-        model.addEdge( "main", "cleanup" );
-        model.addEdge( "execute", "make_string" );
-        model.addEdge( "execute", "printf" );
-        model.addEdge( "init", "make_string" );
-        model.addEdge( "main", "printf" );
-        model.addEdge( "execute", "compare" );
+		model.addEdge("main", "parse");
+		model.addEdge("parse", "execute");
+		model.addEdge("main", "init");
+		model.addEdge("main", "cleanup");
+		model.addEdge("execute", "make_string");
+		model.addEdge("execute", "printf");
+		model.addEdge("init", "make_string");
+		model.addEdge("main", "printf");
+		model.addEdge("execute", "compare");
 
-        File outputFile = new File( "target/graph/simple.png" );
+		File outputFile = new File("target/graph/simple.png");
+		File dotFile = new File("target/graph/simple.dot");
 
-        renderer.render( model, outputFile );
+		try {
+			renderer.render(model, outputFile);
 
-        assertTrue( outputFile.exists() );
-        assertTrue( outputFile.isFile() );
-    }
+			assertTrue(outputFile.exists());
+			assertTrue(outputFile.isFile());
+		} catch (GraphvizNotFoundException ignore) {
+			// Do not test for png existence if graphviz is not present.
+		}
 
-    public void testFancy()
-        throws Exception
-    {
-        GraphRenderer renderer = getRenderer();
+		assertTrue(dotFile.exists());
+		assertTrue(dotFile.isFile());
+	}
 
-        Graph model = new Graph();
-        GraphDecorator decorator = new GraphDecorator();
-        model.setDecorator( decorator );
+	public void testFancy() throws Exception {
+		GraphRenderer renderer = getRenderer();
 
-        Edge edge;
+		Graph model = new Graph();
+		GraphDecorator decorator = new GraphDecorator();
+		model.setDecorator(decorator);
 
-        model.addEdge( "main", "parse" );
-        model.addEdge( "parse", "execute" );
+		Edge edge;
 
-        edge = model.addEdge( "main", "init" );
-        edge.setDecorator( new EdgeDecorator() );
-        edge.getDecorator().setStyle( EdgeDecorator.LineStyle.DASHED );
-        edge.getDecorator().setLineColor( Color.CYAN );
+		model.addEdge("main", "parse");
+		model.addEdge("parse", "execute");
 
-        model.addEdge( "main", "cleanup" );
+		edge = model.addEdge("main", "init");
+		edge.setDecorator(new EdgeDecorator());
+		edge.getDecorator().setStyle(EdgeDecorator.LineStyle.DASHED);
+		edge.getDecorator().setLineColor(Color.CYAN);
 
-        Node makeString = model.addNode( "make a \nstring" );
+		model.addEdge("main", "cleanup");
 
-        model.addEdge( "execute", makeString.getLabel() );
-        model.addEdge( "execute", "printf" );
-        model.addEdge( "init", makeString.getLabel() );
+		Node makeString = model.addNode("make a \nstring");
 
-        edge = model.addEdge( "main", "printf" );
-        edge.setDecorator( new EdgeDecorator() );
-        edge.getDecorator().setStyle( EdgeDecorator.LineStyle.BOLD );
-        edge.getDecorator().setLineLabel( "100 times" );
+		model.addEdge("execute", makeString.getLabel());
+		model.addEdge("execute", "printf");
+		model.addEdge("init", makeString.getLabel());
 
-        Node compare = model.addNode( "compare" );
-        compare.setDecorator( new NodeDecorator() );
+		edge = model.addEdge("main", "printf");
+		edge.setDecorator(new EdgeDecorator());
+		edge.getDecorator().setStyle(EdgeDecorator.LineStyle.BOLD);
+		edge.getDecorator().setLineLabel("100 times");
 
-        Color purple = new Color( 0.7f, 0.3f, 1.0f );
+		Node compare = model.addNode("compare");
+		compare.setDecorator(new NodeDecorator());
 
-        compare.getDecorator().setBackgroundColor( purple );
-        compare.getDecorator().setBorderColor( purple );
-        compare.getDecorator().setLabelColor( Color.WHITE );
+		Color purple = new Color(0.7f, 0.3f, 1.0f);
 
-        edge = model.addEdge( "execute", "compare" );
-        edge.setDecorator( new EdgeDecorator() );
-        edge.getDecorator().setLineColor( Color.RED );
+		compare.getDecorator().setBackgroundColor(purple);
+		compare.getDecorator().setBorderColor(purple);
+		compare.getDecorator().setLabelColor(Color.WHITE);
 
-        File outputFile = new File( "target/graph/fancy.png" );
+		edge = model.addEdge("execute", "compare");
+		edge.setDecorator(new EdgeDecorator());
+		edge.getDecorator().setLineColor(Color.RED);
 
-        renderer.render( model, outputFile );
+		File outputFile = new File("target/graph/fancy.png");
+		File dotFile = new File("target/graph/fancy.dot");
 
-        assertTrue( outputFile.exists() );
-        assertTrue( outputFile.isFile() );
-    }
+		try {
+			renderer.render(model, outputFile);
+
+			assertTrue(outputFile.exists());
+			assertTrue(outputFile.isFile());
+		} catch (GraphvizNotFoundException ignore) {
+			// Do not test for png existence if graphviz is not present.
+		}
+
+		assertTrue(dotFile.exists());
+		assertTrue(dotFile.isFile());
+	}
 }
