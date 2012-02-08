@@ -2,3 +2,7 @@
 /.project
 /.settings
 /target
+*.swp
+*.log
+*.patch
+*.diff
