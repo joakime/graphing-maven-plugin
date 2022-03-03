@@ -160,7 +160,7 @@ public class Graph implements Cloneable, Serializable
     /**
      * Indicates if there is at least one edge leading to or from node of given label
      * 
-     * @return <code>true</true> if this node is connected with other node,<code>false</code> otherwise
+     * @return <code>true</code> if this node is connected with other node,<code>false</code> otherwise
      */
     public boolean isConnected(final String label)
     {

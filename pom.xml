@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <prerequisites>
-    <maven>3.0</maven>
+    <maven>3.8.0</maven>
   </prerequisites>
   <groupId>net.erdfelt.maven</groupId>
   <artifactId>graphing-maven-plugin</artifactId>
@@ -41,23 +41,32 @@
   </developers>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <mavenVersion>3.0.4</mavenVersion>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+
+    <maven.version>3.8.4</maven.version>
+
+    <jetty-test-helper.version>1.6.1</jetty-test-helper.version>
+    <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>2.7</maven-javadoc-plugin.version>
+    <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
+    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+    <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
+    <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+    <plexus-component-metadata.version>2.1.1</plexus-component-metadata.version>
   </properties>
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
+        <version>${maven-compiler-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-component-metadata</artifactId>
-        <version>1.5.5</version>
+        <version>${plexus-component-metadata.version}</version>
         <executions>
           <execution>
             <id>process-classes</id>
@@ -76,7 +85,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>2.8</version>
+        <version>${maven-plugin-plugin.version}</version>
         <executions>
           <execution>
             <id>create-help-mojo</id>
@@ -89,7 +98,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.2</version>
+        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <id>source-jar</id>
@@ -102,7 +111,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
+        <version>${maven-javadoc-plugin.version}</version>
         <executions>
           <execution>
             <id>javadoc-jar</id>
@@ -111,11 +120,35 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <tags>
+            <tag>
+              <name>goal</name>
+              <placement>X</placement>
+              <head>Maven Plugin / Goal: </head>
+            </tag>
+            <tag>
+              <name>requiresProject</name>
+              <placement>X</placement>
+              <head>Maven Plugin / Requires Project: </head>
+            </tag>
+            <tag>
+              <name>aggregator</name>
+              <placement>X</placement>
+              <head>Maven Plugin / Aggregator: </head>
+            </tag>
+            <tag>
+              <name>threadSafe</name>
+              <placement>X</placement>
+              <head>Maven Plugin / Thread Safe: </head>
+            </tag>
+          </tags>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.1</version>
+        <version>${maven-release-plugin.version}</version>
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <mavenExecutorId>forked-path</mavenExecutorId>
@@ -132,24 +165,24 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-compat</artifactId>
-      <version>${mavenVersion}</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>${mavenVersion}</version>
+      <version>${maven.version}</version>
     </dependency>
     <!-- testing deps -->
     <dependency>
       <groupId>org.eclipse.jetty.toolchain</groupId>
       <artifactId>jetty-test-helper</artifactId>
-      <version>1.6.1</version>
+      <version>${jetty-test-helper.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>2.0-alpha-1</version>
+      <version>${maven-plugin-testing-harness.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -173,7 +206,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.4</version>
+            <version>${maven-gpg-plugin.version}</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>

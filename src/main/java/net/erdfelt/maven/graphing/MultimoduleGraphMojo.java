@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import net.erdfelt.maven.graphing.graph.GraphRenderer;
 import net.erdfelt.maven.graphing.graph.GraphingException;
@@ -66,12 +67,12 @@ extends AbstractMojo
     private GraphRenderer graphRenderer;
 
     /**
-     * @parameter expression="${graphing.ignoreVersions}" default-value="true"
+     * @parameter property="graphing.ignoreVersions" default-value="true"
      */
     private boolean ignoreVersions;
 
     /**
-     * @parameter expression="${graphing.filterTests}" default-value="true"
+     * @parameter property="graphing.filterTests" default-value="true"
      */
     private boolean filterTests;
     
@@ -92,7 +93,7 @@ extends AbstractMojo
                 MavenProject project = (MavenProject) it.next();
                 List deps = project.getDependencies();
 
-                if ( !StringUtils.equals( "pom", project.getPackaging() ) )
+                if ( !"pom".equals( project.getPackaging() ) )
                 {
                     Node currentNode = graph.addNode( toNode( project ) );
                     getLog().info( "   Project: " + project.getId() + "  - " + deps.size() + " dep(s)" );
@@ -133,9 +134,9 @@ extends AbstractMojo
         while ( it.hasNext() )
         {
             MavenProject project = (MavenProject) it.next();
-            if ( StringUtils.equals( project.getGroupId(), dep.getGroupId() )
-                && StringUtils.equals( project.getArtifactId(), dep.getArtifactId() )
-                && StringUtils.equals( project.getPackaging(), dep.getType() ) )
+            if ( Objects.equals( project.getGroupId(), dep.getGroupId() )
+                && Objects.equals( project.getArtifactId(), dep.getArtifactId() )
+                && Objects.equals( project.getPackaging(), dep.getType() ) )
             {
                 // Found dep that matches on groupId / artifactId / type only.
                 if ( ignoreVersions )
@@ -144,7 +145,7 @@ extends AbstractMojo
                     ret = true;
                     break;
                 }
-                else if ( StringUtils.equals( project.getVersion(), dep.getVersion() ) )
+                else if ( Objects.equals( project.getVersion(), dep.getVersion() ) )
                 {
                     // Found dep that matches on version too.
                     ret = true;
@@ -205,7 +206,7 @@ extends AbstractMojo
 
     private boolean isTestDep( Dependency dep )
     {
-        return StringUtils.equals( "test", dep.getScope() );
+        return Objects.equals( "test", dep.getScope() );
     }
 
     private Node toNode( Dependency dep )

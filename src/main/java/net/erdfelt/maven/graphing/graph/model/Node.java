@@ -171,7 +171,7 @@ public class Node implements Cloneable, Serializable
     /**
      * Indicates if given node has no child
      * 
-     * @return <code>true</true> if this node has no child, <code>false</code> otherwise
+     * @return <code>true</code> if this node has no child, <code>false</code> otherwise
      */
     public boolean isLeaf()
     {
@@ -181,7 +181,7 @@ public class Node implements Cloneable, Serializable
     /**
      * Indicates if given node has no parent
      * 
-     * @return <code>true</true> if this node has no parent, <code>false</code> otherwise
+     * @return <code>true</code> if this node has no parent, <code>false</code> otherwise
      */
     public boolean isRoot()
     {
@@ -191,7 +191,7 @@ public class Node implements Cloneable, Serializable
     /**
      * Indicates if there is at least one edee leading to or from given node
      * 
-     * @return <code>true</true> if this node is connected with other node,<code>false</code> otherwise
+     * @return <code>true</code> if this node is connected with other node,<code>false</code> otherwise
      */
     public boolean isConnected()
     {
