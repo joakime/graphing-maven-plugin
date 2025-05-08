@@ -44,8 +44,7 @@ import org.codehaus.plexus.util.StringUtils;
  * MultimoduleGraphMojo
  * 
  * @author <a href="mailto:joakim@erdfelt.net">Joakim Erdfelt</a>
- * @version $Id$
- * 
+ *
  * @goal multimodule
  * @aggregator
  */
