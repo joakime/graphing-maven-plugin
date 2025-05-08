@@ -7,7 +7,7 @@
   <groupId>net.erdfelt.maven</groupId>
   <artifactId>graphing-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>Project Graphing Maven Plugin</name>
   <description>Project Graphing Maven Plugin</description>
   <inceptionYear>2010</inceptionYear>
@@ -27,7 +27,7 @@
     <connection>scm:git:git@github.com:joakime/graphing-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:joakime/graphing-maven-plugin.git</developerConnection>
     <url>https://github.com/joakime/graphing-maven-plugin</url>
-    <tag>graphing-maven-plugin-1.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <developers>
     <developer>
